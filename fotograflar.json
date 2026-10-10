@@ -7,9 +7,9 @@
   ],
   "fotograflar": [
     { "dosya": "trofe_1.jpg", "album": "trofe-1"},
-    { "dosya": "viking.jpg", "album": "geziler"},
+    { "dosya": "viking.jpeg", "album": "geziler"},
     { "dosya": "trofe_2.jpg", "album": "trofe-1"},
-    { "dosya": "harita.jpg", "album": "teorik-1"},
-    { "dosya": "sobit.jpg", "album": "teorik-1"}
+    { "dosya": "harita.jpeg", "album": "teorik-1"},
+    { "dosya": "sobit_1.jpg", "album": "teorik-1"}
   ]
 }

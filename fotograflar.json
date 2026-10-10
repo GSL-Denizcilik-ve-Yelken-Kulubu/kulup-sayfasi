@@ -2,7 +2,7 @@
   "albumler": [
     { "id": "trofe-1", "kategori": "trofeler", "baslik": "1. Trofe", "bilgi": "KASIM · [TARİH] · [YER]" },
     { "id": "geziler", "kategori": "trofeler", "baslik": "2. Trofe", "bilgi": "[AY] · [TARİH] · [YER]" },
-    { "id": "teorik-1", "kategori": "teorik-dersler", "baslik": "[DERS KONUSU]", "bilgi": "[TARİH] · [EĞİTMEN]" },
+    { "id": "teorik-1", "kategori": "teorik-dersler"},
     { "id": "yaris-1", "kategori": "yaris-takimi", "baslik": "[YARIŞ / ANTRENMAN ADI]", "bilgi": "[TARİH] · [YER]" }
   ],
   "fotograflar": [

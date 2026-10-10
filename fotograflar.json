@@ -6,7 +6,7 @@
     { "id": "yaris-1", "kategori": "yaris-takimi", "baslik": "[YARIŞ / ANTRENMAN ADI]", "bilgi": "[TARİH] · [YER]" }
   ],
   "fotograflar": [
-    { "dosya": "trofe_1.jpg", "album": "trofe-1"},
+    { "dosya": "trofe_1.jpeg", "album": "trofe-1"},
     { "dosya": "viking.jpeg", "album": "geziler"},
     { "dosya": "trofe_2.jpg", "album": "trofe-1"},
     { "dosya": "harita.jpeg", "album": "teorik-1"},

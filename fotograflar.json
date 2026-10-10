@@ -6,10 +6,10 @@
     { "id": "yaris-1", "kategori": "yaris-takimi", "baslik": "[YARIŞ / ANTRENMAN ADI]", "bilgi": "[TARİH] · [YER]" }
   ],
   "fotograflar": [
-    { "dosya": "trofe_1.jpg", "album": "trofe-1"}
-    { "dosya": "viking.jpg", "album": "geziler"}
-    { "dosya": "trofe_2.jpg", "album": "trofe-1"}
-    { "dosya": "harita.jpg", "album": "teorik-1"}
+    { "dosya": "trofe_1.jpg", "album": "trofe-1"},
+    { "dosya": "viking.jpg", "album": "geziler"},
+    { "dosya": "trofe_2.jpg", "album": "trofe-1"},
+    { "dosya": "harita.jpg", "album": "teorik-1"},
     { "dosya": "sobit.jpg", "album": "teorik-1"}
   ]
 }

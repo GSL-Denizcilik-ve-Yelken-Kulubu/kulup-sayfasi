@@ -31,7 +31,6 @@ Site, GitHub Pages üzerinde yayınlanan basit bir HTML sitesidir. GitHub'daki d
 | Ne yapmak istiyorsun? | Hangi dosyaya dokunacaksın? | Bölüm |
 |---|---|---|
 | Galeriye fotoğraf eklemek | `images/` klasörü + `fotograflar.json` | [6](#6-galeriye-fotoğraf-eklemek) |
-| Yeni bir albüm açmak (ör. 3. Trofe) | `fotograflar.json` | [6.3](#63-yeni-albüm-açmak) |
 | Belge (PDF) eklemek veya güncellemek | `belgeler/` klasörü + `index.html` | [8](#8-belge-pdf-eklemek) |
 | Kapak fotoğrafını değiştirmek | `images/` klasörü + `index.html` | [7](#7-kapak-fotoğrafını-değiştirmek) |
 | Haber eklemek | `images/` klasörü + `index.html` | [9](#9-haber-kartlarını-güncellemek) |
@@ -48,11 +47,11 @@ depo/
 ├── index.html            ← Ana sayfa (kulüp sayfası)
 ├── galeri.html           ← "Tüm fotoğraflar" sayfası
 ├── galeri.js             ← Fotoğrafları sayfalara yerleştiren program — DOKUNMA
-├── fotograflar.json      ← Fotoğraf ve albüm listesi — en sık düzenlenen dosya
+├── fotograflar.json      ← Fotoğraf listesi — en sık düzenlenen dosya
 ├── README.md             ← Bu kılavuz
 ├── images/               ← Bütün fotoğraflar
 │   ├── kapak.jpg
-│   ├── trofe-1-01.jpg
+│   ├── foto-01.jpg
 │   └── ...
 └── belgeler/             ← Bütün PDF belgeler
     ├── kaptanlarin-gorev-ve-sorumluluklari.pdf
@@ -61,7 +60,7 @@ depo/
 
 | Dosya / klasör | Ne işe yarar | Ne sıklıkla düzenlenir |
 |---|---|---|
-| `fotograflar.json` | Galerideki albümlerin ve fotoğrafların listesi | Her fotoğraf eklendiğinde |
+| `fotograflar.json` | Galerideki fotoğrafların listesi | Her fotoğraf eklendiğinde |
 | `images/` | Fotoğraf dosyalarının kendisi | Her fotoğraf eklendiğinde |
 | `belgeler/` | PDF dosyaları | Belge eklendiğinde veya güncellendiğinde |
 | `index.html` | Ana sayfanın yazıları, kapak fotoğrafı, haberler, belge bağlantıları | Dönemde birkaç kez |
@@ -75,7 +74,7 @@ depo/
 Bu kurallara uyarsan sorunların neredeyse tamamı hiç yaşanmaz.
 
 1. **Dosya adlarında sadece küçük harf, rakam ve tire (-) kullan.** Boşluk yok, Türkçe karakter yok (ç, ğ, ı, ö, ş, ü), büyük harf yok.
-   - Doğru: `trofe-1-01.jpg`, `veli-izin-belgesi.pdf`
+   - Doğru: `foto-36.jpg`, `veli-izin-belgesi.pdf`
    - Yanlış: `Trofe 1.JPG`, `veli izin belgesi.pdf`, `IMG_2034.HEIC`
 2. **Büyük/küçük harf farklı sayılır.** `Kapak.jpg` ile `kapak.jpg` GitHub için iki ayrı dosyadır. Bir dosyayı sayfaya yazdığın adla tıpatıp aynı adla yükle.
 3. **Fotoğrafları yüklemeden önce küçült.** Telefondan gelen 5 MB'lık bir fotoğraf sayfayı yavaşlatır. Hedef: genişliği yaklaşık 1600 piksel, boyutu 500 KB'tan küçük. ([Bölüm 5](#5-fotoğrafı-hazırlamak))
@@ -179,11 +178,11 @@ Hedef: **genişlik ~1600 piksel, dosya boyutu < 500 KB.**
 
 | Fotoğraf türü | Ad kalıbı | Örnek |
 |---|---|---|
-| Galeri fotoğrafı | `<albüm-id>-<sıra no>.jpg` | `trofe-1-01.jpg`, `trofe-1-02.jpg` |
+| Galeri fotoğrafı | `foto-<sıra no>.jpg` | `foto-36.jpg`, `foto-37.jpg` |
 | Kapak fotoğrafı | `kapak.jpg` | `kapak.jpg` |
 | Haber görseli | `haber-<yıl>-<ay>-<konu>.jpg` | `haber-2026-11-ilk-trofe.jpg` |
 
-Albüm id'si ile başlamak, `images/` klasöründe hangi fotoğrafın hangi albüme ait olduğunu bir bakışta gösterir.
+Sıra numarasına kaldığın yerden devam et: `images/` klasöründeki en büyük numaraya bak ve bir sonrakini kullan.
 
 ### 5.4 Yatay mı dikey mi?
 
@@ -193,15 +192,15 @@ Galeri kutuları **yatay (4:3)**'tür. Dikey bir fotoğraf eklersen kutuya sığ
 
 ## 6. Galeriye fotoğraf eklemek
 
-Galeri iki parçadan oluşur:
+Galeri **tek bir albümdür**; kategori veya alt albüm yoktur. İki parçadan oluşur:
 - **Fotoğraf dosyaları** `images/` klasöründe durur.
-- **Hangi fotoğrafın hangi albümde olduğu** `fotograflar.json` dosyasında yazar.
+- **Galeride hangi fotoğrafların görüneceği** `fotograflar.json` dosyasında yazar.
 
-Galeri sayfası albümleri bu listeden oluşturur. Ana sayfa da bu listedeki **son 3 fotoğrafı** (en yeni önce) otomatik gösterir.
+Galeri sayfası bütün fotoğrafları bu listeden, **en yeni önce** gösterir. Ana sayfa da bu listedeki **son 3 fotoğrafı** otomatik gösterir.
 
 ### 6.1 Adım adım
 
-**Adım 1 — Fotoğrafı hazırla.** [Bölüm 5](#5-fotoğrafı-hazırlamak)'e göre küçült ve adlandır, ör. `trofe-1-01.jpg`.
+**Adım 1 — Fotoğrafı hazırla.** [Bölüm 5](#5-fotoğrafı-hazırlamak)'e göre küçült ve adlandır, ör. `foto-36.jpg`.
 
 **Adım 2 — `images/` klasörüne yükle.** [Bölüm 4.1](#41-dosya-yüklemek)'deki gibi klasörün içine girip yükle.
 
@@ -209,22 +208,18 @@ Galeri sayfası albümleri bu listeden oluşturur. Ana sayfa da bu listedeki **s
 
 ```json
 {
-  "albumler": [
-    { "id": "trofe-1", "kategori": "trofeler", "baslik": "1. Trofe", "bilgi": "KASIM · [TARİH] · [YER]" },
-    { "id": "trofe-2", "kategori": "trofeler", "baslik": "2. Trofe", "bilgi": "[AY] · [TARİH] · [YER]" },
-    { "id": "teorik-1", "kategori": "teorik-dersler", "baslik": "[DERS KONUSU]", "bilgi": "[TARİH] · [EĞİTMEN]" },
-    { "id": "yaris-1", "kategori": "yaris-takimi", "baslik": "[YARIŞ / ANTRENMAN ADI]", "bilgi": "[TARİH] · [YER]" }
-  ],
   "fotograflar": [
+    { "dosya": "foto-34.jpg", "aciklama": "Beyaz tişörtlü katılımcılarla akşam yemeği" },
+    { "dosya": "foto-35.jpg", "aciklama": "Kırmızı tişörtlü yarış ekibi Solera teknesinde" }
   ]
 }
 ```
 
-`"fotograflar": [` ile `]` arasındaki listenin **en sonuna** yeni bir satır ekle:
+Listenin **en sonuna** yeni bir satır ekle (bir üstteki satırın sonuna virgül koymayı unutma):
 
 ```json
-  "fotograflar": [
-    { "dosya": "trofe-1-01.jpg", "album": "trofe-1", "aciklama": "Start çizgisinde bekleyen tekneler" }
+    { "dosya": "foto-35.jpg", "aciklama": "Kırmızı tişörtlü yarış ekibi Solera teknesinde" },
+    { "dosya": "foto-36.jpg", "aciklama": "Start çizgisinde bekleyen tekneler" }
   ]
 ```
 
@@ -234,8 +229,7 @@ Bir fotoğraf satırındaki alanlar:
 
 | Alan | Ne yazılır | Örnek |
 |---|---|---|
-| `dosya` | `images/` klasöründeki dosyanın tam adı | `"trofe-1-01.jpg"` |
-| `album` | Fotoğrafın ait olduğu albümün `id`'si (yukarıdaki `albumler` listesinden) | `"trofe-1"` |
+| `dosya` | `images/` klasöründeki dosyanın tam adı | `"foto-36.jpg"` |
 | `aciklama` | Fotoğrafta ne olduğunu anlatan kısa bir cümle. Görme engelli ziyaretçilerin ekran okuyucuları bunu sesli okur. | `"Rüzgâr üstü seyir"` |
 
 ### 6.2 Virgül kuralı (en sık yapılan hata)
@@ -246,9 +240,9 @@ Doğru, üç fotoğraf:
 
 ```json
   "fotograflar": [
-    { "dosya": "trofe-1-01.jpg", "album": "trofe-1", "aciklama": "Start çizgisi" },
-    { "dosya": "trofe-1-02.jpg", "album": "trofe-1", "aciklama": "Rüzgâr üstü seyir" },
-    { "dosya": "trofe-1-03.jpg", "album": "trofe-1", "aciklama": "Dönüşte ekip" }
+    { "dosya": "foto-36.jpg", "aciklama": "Start çizgisi" },
+    { "dosya": "foto-37.jpg", "aciklama": "Rüzgâr üstü seyir" },
+    { "dosya": "foto-38.jpg", "aciklama": "Dönüşte ekip" }
   ]
 ```
 
@@ -259,52 +253,25 @@ Yeni bir fotoğraf eklerken:
 Yanlış örnekler:
 
 ```json
-    { "dosya": "a.jpg", "album": "trofe-1", "aciklama": "..." }     ← virgül eksik
-    { "dosya": "b.jpg", "album": "trofe-1", "aciklama": "..." },    ← sondaki virgül fazla
+    { "dosya": "a.jpg", "aciklama": "..." }     ← virgül eksik
+    { "dosya": "b.jpg", "aciklama": "..." },    ← sondaki virgül fazla
   ]
 ```
 
 > **İpucu:** Commit etmeden önce dosyanın tamamını kopyalayıp jsonlint.com sitesine yapıştır ve "Validate JSON"a bas. "Valid JSON" yazıyorsa sorun yok. Hata varsa hangi satırda olduğunu gösterir.
 
-### 6.3 Yeni albüm açmak
+### 6.3 Ana sayfada hangi fotoğraflar görünür?
 
-Örneğin 3. Trofe yapıldı ve fotoğraflarını eklemek istiyorsun:
-
-1. `fotograflar.json`'da `"albumler"` listesinin sonuna yeni bir satır ekle (aynı virgül kuralı geçerli):
-
-```json
-    { "id": "trofe-3", "kategori": "trofeler", "baslik": "3. Trofe", "bilgi": "MART · 14.03.2027 · Tuzla" }
-```
-
-2. Bu albümün fotoğraflarında `"album": "trofe-3"` yaz.
-
-Albüm alanları:
-
-| Alan | Ne yazılır | Kurallar |
-|---|---|---|
-| `id` | Albümün kısa kimliği | Benzersiz olmalı. Küçük harf, rakam, tire. Ör. `trofe-3`, `teorik-2`, `yaris-istanbul-kupasi` |
-| `kategori` | Albümün hangi bölümde görüneceği | Sadece şu üçünden biri: `trofeler`, `teorik-dersler`, `yaris-takimi` |
-| `baslik` | Albümün galeride görünen adı | Serbest metin, ör. `"3. Trofe"` |
-| `bilgi` | Başlığın yanındaki küçük satır (tarih, yer vb.) | Serbest metin, ör. `"MART · 14.03.2027 · Tuzla"` |
-
-Bilinmesi gerekenler:
-- **Albümler, listede yazıldıkları sırayla** gösterilir. En yeniyi en üstte görmek istersen yeni albümü listenin başına ekle (virgül kuralına dikkat).
-- **Hiç fotoğrafı olmayan albüm gösterilmez.** Yani albümü önceden açabilirsin; fotoğraf eklenene kadar görünmez.
-- Bir bölümde hiç fotoğraf yoksa o bölümde "Bu bölüme henüz fotoğraf eklenmedi." yazar.
-- **Yeni bir kategori** (ör. "Etkinlikler" diye dördüncü bir bölüm) eklemek için `galeri.html`'de değişiklik gerekir; bunun için [Bölüm 14](#14-teknik-notlar)'e bak.
-
-### 6.4 Ana sayfada hangi fotoğraflar görünür?
-
-Ana sayfadaki "Denizden kareler" bölümü, `fotograflar` listesinin **son 3 satırını** gösterir; en son eklenen solda. Bir fotoğrafa tıklayan, galeri sayfasında o fotoğrafın albümüne gider.
+Ana sayfadaki "Denizden kareler" bölümü, `fotograflar` listesinin **son 3 satırını** gösterir; en son eklenen solda. Bir fotoğrafa tıklayan, galeri sayfasında o fotoğrafa gider.
 
 - Ana sayfada özellikle bir fotoğraf görünsün istiyorsan, satırını listenin en sonuna taşı.
 - Listede 3'ten az fotoğraf varsa sadece olanlar görünür. Hiç yoksa "Fotoğraflar çok yakında burada." yazar.
 
-### 6.5 Fotoğraf çıkarmak, değiştirmek, sırasını değiştirmek
+### 6.4 Fotoğraf çıkarmak, değiştirmek, sırasını değiştirmek
 
 - **Çıkarmak:** Satırını `fotograflar.json`'dan sil (virgül kuralını kontrol et). İstersen dosyayı `images/`'dan da sil.
 - **Değiştirmek:** Yeni fotoğrafı aynı adla `images/`'a yükle ([Bölüm 4.3](#43-bir-dosyayı-yenisiyle-değiştirmek)). Liste aynı kalır.
-- **Sırasını değiştirmek:** Bir albümdeki fotoğraflar, listede yazıldıkları sırayla gösterilir. Satırların yerini değiştirmen yeterli.
+- **Sırasını değiştirmek:** Galeri, listeyi **sondan başa** gösterir: listenin en sonundaki fotoğraf galerinin en başında durur. Satırların yerini değiştirmen yeterli.
 
 ---
 
@@ -479,7 +446,6 @@ Yeni kaptanlar seçildiğinde, devir teslimin bir parçası olarak:
 - [ ] Yeni kaptanları GitHub'da **Collaborators** olarak ekle ([4.7](#47-başkalarına-erişim-vermek)); mezun olanların erişimini kaldır.
 - [ ] `index.html`'de **KAPTANLAR**, **DANIŞMAN ÖĞRETMENLER**, **ÜYE ÖĞRENCİ**, **ETKİNLİK** ve **BULUŞMA** bilgilerini güncelle.
 - [ ] **Sezon faaliyetleri** listesini yeni yılın planıyla değiştir ve başlıktaki eğitim yılını güncelle.
-- [ ] `fotograflar.json`'a yeni yılın albümlerini ekle (ör. `trofe-1-2027`). Eski albümler galeride kalabilir.
 - [ ] Yeni **faaliyet raporu** dosyasını oluşturup bağlantısını güncelle ([8.3](#83-faaliyet-raporlarını-güncel-tutmak)).
 - [ ] **Veli izin belgesi** değiştiyse yenisini aynı adla yükle.
 - [ ] Bu kılavuzu yeni kaptanlarla birlikte bir kez oku.
@@ -503,11 +469,9 @@ Bu site herkese açıktır ve arama motorlarında çıkabilir. Ayrıca GitHub de
 
 | Belirti | Olası neden | Çözüm |
 |---|---|---|
-| Galeri bomboş, "Bu bölüme henüz fotoğraf eklenmedi" yazıyor ama fotoğraf eklemiştim | `fotograflar.json`'da virgül veya tırnak hatası | Dosyayı jsonlint.com'da kontrol et ([6.2](#62-virgül-kuralı-en-sık-yapılan-hata)). Telefonda kıvrık tırnak (`“ ”`) girmiş olabilir. |
+| Galeri bomboş, "Henüz fotoğraf eklenmedi" yazıyor ama fotoğraf eklemiştim | `fotograflar.json`'da virgül veya tırnak hatası | Dosyayı jsonlint.com'da kontrol et ([6.2](#62-virgül-kuralı-en-sık-yapılan-hata)). Telefonda kıvrık tırnak (`“ ”`) girmiş olabilir. |
 | Fotoğrafın yerinde boş/bozuk bir kutu var | Dosya adı listedekiyle tıpatıp aynı değil | Büyük/küçük harfi ve uzantıyı karşılaştır: `Trofe-1-01.JPG` ≠ `trofe-1-01.jpg` |
 | Fotoğraf `images/` klasöründe yok | Yanlış klasöre yüklenmiş | Deponun ana sayfasına bak; dosya orada duruyorsa sil ve `images/` içine yeniden yükle |
-| Fotoğraf yanlış albümde | `album` alanı yanlış | Satırdaki `"album"` değerini albümün `id`'siyle karşılaştır |
-| Bir albüm hiç görünmüyor | Albümde fotoğraf yok veya `kategori` yazımı yanlış | `kategori` sadece `trofeler`, `teorik-dersler` veya `yaris-takimi` olabilir |
 | iPhone fotoğrafı görünmüyor | Dosya `.heic` formatında | JPG'ye çevir ([5.2](#52-format)) |
 | Belge kartına tıklayınca "404" sayfası açılıyor | PDF yanlış klasörde veya adı farklı | PDF'in `belgeler/` içinde ve `href`'teki adla aynı olduğunu kontrol et |
 | Değişiklik sitede görünmüyor | Henüz yayına çıkmadı veya tarayıcı eski sürümü gösteriyor | 2 dakika bekle, **Actions** sekmesine bak, `Ctrl + Shift + R` ile yenile |
@@ -526,7 +490,7 @@ Bu bölüm, sitenin nasıl kurulduğunu merak edenler ve tasarım değişikliği
 ### 14.1 Galeri nasıl çalışır?
 
 - `galeri.js`, sayfa açıldığında `fotograflar.json`'ı okur.
-- `galeri.html`'de `data-albumler="trofeler"` gibi işaretli üç boş kutu vardır; her biri, `kategori` alanı eşleşen albümlerle doldurulur.
+- `galeri.html`'de `data-galeri` ile işaretli kutu, listedeki bütün fotoğraflarla (en yeni önce) doldurulur.
 - `index.html`'de `data-son-fotograflar` ile işaretli kutu, listenin son 3 fotoğrafıyla doldurulur.
 - Fotoğraflar `images/` klasöründen okunur; bu klasör adı `galeri.js`'nin başındaki `RESIM_KLASORU` değişkeninde yazar.
 
@@ -534,7 +498,7 @@ Bu bölüm, sitenin nasıl kurulduğunu merak edenler ve tasarım değişikliği
 
 Sitenin tasarımı Claude'daki bir tasarım kanvasında ("Denizcilik ve Yelken Kulübü") yapıldı. `index.html` ve `galeri.html` bu kanvastan üretilir.
 
-- **Büyük tasarım değişiklikleri** (yeni bölüm, yeni sayfa, yeni galeri kategorisi, renk veya yerleşim değişikliği) için kanvastan çalışmak en kolayıdır. Claude'dan istediğinde güncel HTML dosyaları yeniden üretilir.
+- **Büyük tasarım değişiklikleri** (yeni bölüm, yeni sayfa, renk veya yerleşim değişikliği) için kanvastan çalışmak en kolayıdır. Claude'dan istediğinde güncel HTML dosyaları yeniden üretilir.
 - **Önemli:** Yeniden üretilen `index.html`/`galeri.html`, GitHub'da elle yaptığın değişikliklerin (isimler, haberler, belge bağlantıları, kapak fotoğrafı) üzerine yazar. Bunu önlemek için tasarım değişikliği istemeden önce GitHub'daki güncel `index.html`'i Claude'a ver, ya da elle yaptığın değişiklikleri söyle.
 - **`fotograflar.json` ve `images/` bu durumdan etkilenmez**; onlar her zaman sende kalır. Yeni dosya setiyle gelen `fotograflar.json`'ı kendi dosyanın üzerine **yükleme**.
 
@@ -565,7 +529,7 @@ Site herkese açık hâle gelmeden önce aşağıdakilerin doldurulması gerekiy
 - [ ] Faaliyet Raporları ve Veli İzin Belgesi kartlarının PDF'leri ([Bölüm 8](#8-belge-pdf-eklemek))
 
 **`fotograflar.json`**
-- [ ] Albüm bilgilerindeki `[TARİH]`, `[YER]`, `[AY]`, `[DERS KONUSU]`, `[EĞİTMEN]`, `[YARIŞ / ANTRENMAN ADI]`
+- [ ] Fotoğraf satırlarındaki boş `aciklama` alanları
 
 **`galeri.html`**
 - [ ] Başlıktaki eğitim yılı `[2026–2027]`

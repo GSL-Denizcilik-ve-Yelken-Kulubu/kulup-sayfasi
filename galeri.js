@@ -2,7 +2,7 @@
  * Denizcilik ve Yelken Kulübü — fotoğraf galerisi
  *
  * Fotoğraflar fotograflar.json dosyasından okunur:
- *  - galeri.html: her albüm, kendi kategorisinin altında gösterilir.
+ *  - galeri.html: bütün fotoğraflar tek albümde, en yeni önce gösterilir.
  *  - index.html: listenin SON 3 fotoğrafı (en yeni önce) gösterilir.
  * Bu dosyayı düzenlemeniz gerekmez; yeni fotoğraf için sadece
  * fotograflar.json'a bir satır ekleyin.
@@ -29,59 +29,40 @@
     return a;
   }
 
-  function bosMesaj(metin) {
-    return el('p', 'margin: 32px 0 0; padding-top: 16px; border-top: 1px solid #C9D2D9; color: #4A5A6A', metin);
-  }
-
-  function albumBlogu(album, fotolar) {
-    var kutu = el('div', 'margin-top: 40px; scroll-margin-top: 24px');
-    kutu.id = album.id;
-    var ust = el('div', 'display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; margin-bottom: 16px; padding-top: 16px; border-top: 1px solid #C9D2D9');
-    ust.appendChild(el('h3', "margin: 0; font-family: 'Archivo', sans-serif; font-stretch: 85%; font-weight: 700; font-size: 24px; line-height: 1.2", album.baslik));
-    if (album.bilgi) {
-      ust.appendChild(el('span', "font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #4A5A6A", album.bilgi));
-    }
-    kutu.appendChild(ust);
-    var izgara = el('div', 'display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px');
-    fotolar.forEach(function (f) { izgara.appendChild(fotoKutusu(f)); });
-    kutu.appendChild(izgara);
-    return kutu;
-  }
-
   function goster(veri) {
-    var albumler = veri.albumler || [];
-    var fotograflar = veri.fotograflar || [];
+    var fotograflar = (veri.fotograflar || []).slice().reverse(); // en yeni önce
 
-    // Ana sayfa: son eklenen 3 fotoğraf, en yeni önce
+    // Ana sayfa: son eklenen 3 fotoğraf
     var son = document.querySelector('[data-son-fotograflar]');
     if (son) {
       son.textContent = '';
-      var son3 = fotograflar.slice(-3).reverse();
+      var son3 = fotograflar.slice(0, 3);
       if (!son3.length) {
         son.appendChild(el('p', 'margin: 0; color: #4A5A6A', 'Fotoğraflar çok yakında burada.'));
       }
       son3.forEach(function (f) {
-        son.appendChild(fotoKutusu(f, 'galeri.html#' + encodeURIComponent(f.album)));
+        son.appendChild(fotoKutusu(f, 'galeri.html#' + encodeURIComponent(f.dosya)));
       });
     }
 
-    // Galeri sayfası: kategorilere göre albümler
-    var kaplar = document.querySelectorAll('[data-albumler]');
-    Array.prototype.forEach.call(kaplar, function (kap) {
-      kap.textContent = '';
-      var kategori = kap.getAttribute('data-albumler');
-      var eklendi = 0;
-      albumler.forEach(function (album) {
-        if (album.kategori !== kategori) return;
-        var fotolar = fotograflar.filter(function (f) { return f.album === album.id; });
-        if (!fotolar.length) return;
-        kap.appendChild(albumBlogu(album, fotolar));
-        eklendi++;
+    // Galeri sayfası: bütün fotoğraflar tek ızgarada
+    var galeri = document.querySelector('[data-galeri]');
+    if (galeri) {
+      galeri.textContent = '';
+      if (!fotograflar.length) {
+        galeri.appendChild(el('p', 'margin: 0; color: #4A5A6A', 'Henüz fotoğraf eklenmedi.'));
+      }
+      fotograflar.forEach(function (f) {
+        var kutu = fotoKutusu(f);
+        kutu.id = f.dosya;
+        kutu.style.scrollMarginTop = '24px';
+        galeri.appendChild(kutu);
       });
-      if (!eklendi) kap.appendChild(bosMesaj('Bu bölüme henüz fotoğraf eklenmedi.'));
-    });
+      var sayac = document.querySelector('[data-foto-sayisi]');
+      if (sayac) sayac.textContent = fotograflar.length + ' FOTOĞRAF';
+    }
 
-    // galeri.html#album-id ile gelindiyse o albüme kaydır
+    // galeri.html#dosya-adi ile gelindiyse o fotoğrafa kaydır
     if (location.hash) {
       var hedef = document.getElementById(decodeURIComponent(location.hash.slice(1)));
       if (hedef) hedef.scrollIntoView();
@@ -96,6 +77,6 @@
     .then(goster)
     .catch(function (hata) {
       console.error('Galeri yüklenemedi:', hata);
-      goster({ albumler: [], fotograflar: [] });
+      goster({ fotograflar: [] });
     });
 })();

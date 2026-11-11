@@ -46,6 +46,7 @@ Site, GitHub Pages üzerinde yayınlanan basit bir HTML sitesidir. GitHub'daki d
 depo/
 ├── index.html            ← Ana sayfa (kulüp sayfası)
 ├── galeri.html           ← "Tüm fotoğraflar" sayfası
+├── yaris-takimi.html     ← "Yarış Takımı" sayfası
 ├── galeri.js             ← Fotoğrafları sayfalara yerleştiren program — DOKUNMA
 ├── fotograflar.json      ← Fotoğraf listesi — en sık düzenlenen dosya
 ├── README.md             ← Bu kılavuz
@@ -65,6 +66,7 @@ depo/
 | `belgeler/` | PDF dosyaları | Belge eklendiğinde veya güncellendiğinde |
 | `index.html` | Ana sayfanın yazıları, kapak fotoğrafı, haberler, belge bağlantıları | Dönemde birkaç kez |
 | `galeri.html` | Galeri sayfasının iskeleti (başlıklar, açıklamalar) | Nadiren |
+| `yaris-takimi.html` | Yarış Takımı sayfası | Nadiren |
 | `galeri.js` | Galeriyi çalıştıran kod | **Hiçbir zaman** |
 
 ---
